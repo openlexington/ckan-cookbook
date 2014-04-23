@@ -8,6 +8,11 @@
 #
 
 include_recipe 'git'
+include_recipe 'python'
+include_recipe 'postgresql::ruby'
+package 'libpq-dev'
+include_recipe 'postgresql::server'
+include_recipe 'postgresql::client'
 
 group 'ckan' do
   action :create
@@ -50,4 +55,31 @@ git '/home/ckan/ckan' do
   user 'ckan'
   group 'ckan'
   action :checkout
+end
+
+postgresql_connection = {
+  username: 'postgres',
+  host: 'localhost'
+}
+
+postgresql_database_user 'ckan' do
+  username 'ckan'
+  password 'ckan'
+  connection postgresql_connection
+  action :create
+end
+
+postgresql_database 'ckan' do
+  owner 'ckan'
+  database_name 'ckan'
+  connection postgresql_connection
+  action :create
+end
+
+postgresql_database_user 'ckan' do
+  username 'ckan'
+  database_name 'ckan'
+  privileges [:all]
+  connection postgresql_connection
+  action :grant
 end

@@ -10,6 +10,7 @@ supports 'ubuntu'
 
 depends 'apache2'
 depends 'apt'
+depends 'database'
 depends 'git'
 depends 'postgresql'
 depends 'python'

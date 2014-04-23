@@ -16,10 +16,34 @@ Vagrant.configure('2') do |config|
     ckan.omnibus.chef_version = '11.10.4'
 
     ckan.vm.provision :chef_solo do |chef|
+      chef.log_level = :debug
       chef.run_list = [
+        'recipe[apt]',
+        'recipe[annoyances]',
+        'recipe[build-essential]',
+        'recipe[sudo]',
+        'recipe[hostname]',
         'recipe[ckan::default]'
       ]
-      chef.json = {}
+      chef.json = {
+        authorization: {
+          sudo: {
+            users: ['ubuntu'],
+            passwordless: true
+          }
+        },
+        build_essential: {
+          compile_time: true
+        },
+        postgresql: {
+          version: '9.3',
+          password: {postgres: 'password'},
+          config: {
+            ssl_cert_file: '/etc/ssl/certs/ssl-cert-snakeoil.pem',
+            ssl_key_file: '/etc/ssl/private/ssl-cert-snakeoil.key'
+          }
+        }
+      }
     end
   end
 end
