@@ -28,7 +28,7 @@ Vagrant.configure('2') do |config|
       chef.json = {
         authorization: {
           sudo: {
-            users: ['ubuntu'],
+            users: ['ubuntu','vagrant'],
             passwordless: true
           }
         },
