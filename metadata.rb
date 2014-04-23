@@ -9,4 +9,7 @@ version          '0.1.0'
 supports 'ubuntu'
 
 depends 'apache2'
+depends 'apt'
+depends 'git'
 depends 'postgresql'
+depends 'python'
