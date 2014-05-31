@@ -20,11 +20,17 @@ group 'ckan' do
 end
 
 user 'ckan' do
-  gid ['ckan','staff']
+  gid 'ckan'
   shell '/bin/bash'
   home File.join('/home/', 'ckan')
   supports manage_home: true
   action :create
+end
+
+group "staff" do
+  action :modify
+  members "ckan"
+  append true
 end
 
 directory File.join('/home/', 'ckan', '.ssh') do
