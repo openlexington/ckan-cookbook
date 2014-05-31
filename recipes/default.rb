@@ -7,6 +7,7 @@
 # All rights reserved - Do Not Redistribute
 #
 
+include_recipe 'sudo'
 include_recipe 'git'
 include_recipe 'python'
 include_recipe 'postgresql::ruby'
@@ -62,24 +63,68 @@ postgresql_connection = {
   host: 'localhost'
 }
 
-postgresql_database_user 'ckan' do
-  username 'ckan'
-  password 'ckan'
+postgresql_database_user 'ckan_default' do
+  username 'ckan_default'
+  password 'ckan_default'
   connection postgresql_connection
   action :create
 end
 
-postgresql_database 'ckan' do
-  owner 'ckan'
-  database_name 'ckan'
+postgresql_database 'ckan_default' do
+  owner 'ckan_default'
+  database_name 'ckan_default'
   connection postgresql_connection
   action :create
 end
 
-postgresql_database_user 'ckan' do
-  username 'ckan'
-  database_name 'ckan'
+postgresql_database_user 'ckan_default' do
+  username 'ckan_default'
+  database_name 'ckan_default'
   privileges [:all]
   connection postgresql_connection
   action :grant
+end
+
+directory '/home/ckan/ckan/ckan/etc' do
+  owner 'ckan'
+  group 'ckan'
+  action :create
+end
+
+link 'Link CKAN lib' do
+  owner 'ckan'
+  group 'ckan'
+  to '/home/ckan/ckan/ckan/lib'
+  target_file '/usr/lib/ckan'
+end
+
+link 'Link CKAN etc' do
+  owner 'ckan'
+  group 'ckan'
+  to '/home/ckan/ckan/ckan/etc'
+  target_file '/etc/ckan'
+end
+
+python_virtualenv '/usr/lib/ckan/default' do
+  interpreter 'python2.7'
+  owner 'ckan'
+  group 'ckan'
+  options '--no-site-packages'
+  action :create
+end
+
+execute 'activate python virtual enviroment' do
+  user 'ckan'
+  command 'bash /usr/lib/ckan/default/bin/activate'
+  action :run
+end
+
+package 'python-pastescript' do
+  action :install
+end
+
+execute 'create config' do
+  user 'ckan'
+  command 'paster make-config ckan /etc/ckan/default/development.ini'
+  action :run
 end
