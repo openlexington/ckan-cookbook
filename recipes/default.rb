@@ -20,7 +20,7 @@ group 'ckan' do
 end
 
 user 'ckan' do
-  gid 'ckan'
+  gid ['ckan','staff']
   shell '/bin/bash'
   home File.join('/home/', 'ckan')
   supports manage_home: true
@@ -114,8 +114,9 @@ package 'python-pastescript' do
   action :install
 end
 
-#execute 'create config' do
-#  user 'ckan'
-#  command 'paster make-config ckan /etc/ckan/default/development.ini'
-#  action :run
-#end
+execute 'create config' do
+  user 'ckan'
+  cwd '/home/ckan/ckan'
+  command 'paster make-config ckan /etc/ckan/default/development.ini'
+  action :run
+end
