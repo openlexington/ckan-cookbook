@@ -27,9 +27,9 @@ user 'ckan' do
   action :create
 end
 
-group "staff" do
+group 'staff' do
   action :modify
-  members "ckan"
+  members 'ckan'
   append true
 end
 
