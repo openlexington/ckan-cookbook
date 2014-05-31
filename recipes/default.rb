@@ -34,15 +34,6 @@ directory File.join('/home/', 'ckan', '.ssh') do
   action :create
 end
 
-cookbook_file 'vagrant insecure key' do
-  owner 'ckan'
-  group 'ckan'
-  mode 0600
-  path '/home/ckan/.ssh'
-  source 'insecure_private_key'
-  action :create_if_missing
-end
-
 directory '/opt/ckan' do
   owner 'ckan'
   group 'ckan'
@@ -123,8 +114,8 @@ package 'python-pastescript' do
   action :install
 end
 
-execute 'create config' do
-  user 'ckan'
-  command 'paster make-config ckan /etc/ckan/default/development.ini'
-  action :run
-end
+#execute 'create config' do
+#  user 'ckan'
+#  command 'paster make-config ckan /etc/ckan/default/development.ini'
+#  action :run
+#end
