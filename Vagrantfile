@@ -28,7 +28,8 @@ Vagrant.configure('2') do |config|
         'recipe[build-essential]',
         'recipe[sudo]',
         'recipe[hostname]',
-        'recipe[ckan::default]'
+        'recipe[ckan::default]',
+        'recipe[ckan::vagrant-keys]'
       ]
       chef.json = {
         authorization: {
