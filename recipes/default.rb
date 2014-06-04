@@ -82,26 +82,6 @@ postgresql_database_user 'ckan_default' do
   action :grant
 end
 
-directory '/home/ckan/ckan/ckan/etc' do
-  owner 'ckan'
-  group 'ckan'
-  action :create
-end
-
-link 'Link CKAN lib' do
-  owner 'ckan'
-  group 'ckan'
-  to '/home/ckan/ckan/ckan/lib'
-  target_file '/usr/lib/ckan'
-end
-
-link 'Link CKAN etc' do
-  owner 'ckan'
-  group 'ckan'
-  to '/home/ckan/ckan/ckan/etc'
-  target_file '/etc/ckan'
-end
-
 python_virtualenv '/usr/lib/ckan/default' do
   interpreter 'python2.7'
   owner 'ckan'
