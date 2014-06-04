@@ -90,12 +90,6 @@ python_virtualenv '/usr/lib/ckan/default' do
   action :create
 end
 
-execute 'activate python virtual enviroment' do
-  user 'ckan'
-  command 'bash /usr/lib/ckan/default/bin/activate'
-  action :run
-end
-
 package 'python-pastescript' do
   action :install
 end
