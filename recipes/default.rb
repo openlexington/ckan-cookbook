@@ -93,10 +93,3 @@ end
 package 'python-pastescript' do
   action :install
 end
-
-execute 'create config' do
-  user 'ckan'
-  cwd '/home/ckan/ckan'
-  command 'paster make-config ckan /etc/ckan/default/development.ini'
-  action :run
-end
