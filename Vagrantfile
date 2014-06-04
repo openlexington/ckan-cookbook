@@ -47,6 +47,9 @@ Vagrant.configure('2') do |config|
           config: {
             ssl_cert_file: '/etc/ssl/certs/ssl-cert-snakeoil.pem',
             ssl_key_file: '/etc/ssl/private/ssl-cert-snakeoil.key'
+          },
+          java: {
+            jdk_version: 7
           }
         }
       }
